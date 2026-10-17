@@ -20,6 +20,12 @@
 /logo                  emmc    /dev/block/bootdevice/by-name/logo                                 flags=backup=1;display="logo";flashimg=1
 /misc                  emmc    /dev/block/bootdevice/by-name/misc                                 flags=backup=1;display="misc";flashimg=1
 
+# Logical (Super) partitions
+# mi_ext is only listed in recovery.fstab (nofail); it is declared here as a
+# logical partition so that the high-speed flash path can resolve
+# /mi_ext and refresh its size after the Super group rebuild.
+/mi_ext                emmc    /dev/block/bootdevice/by-name/mi_ext                               flags=display="mi_ext";logical
+
 # Persistent Firmware & Properties
 /persist               ext4    /dev/block/bootdevice/by-name/persist                              flags=display="Persist";backup=0
 /persist_image         emmc    /dev/block/bootdevice/by-name/persist                              flags=display="Persist";flashimg=1

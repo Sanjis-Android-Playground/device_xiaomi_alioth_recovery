@@ -40,9 +40,45 @@ _Lunch_ command :
 lunch twrp_alioth-eng && mka adbd bootimage
 ```
 
+## High-Speed Flash (BETA)
+
+This tree includes a port of the **High-Speed Flash** feature from
+[khargosxh18's peridot tree](https://github.com/khargosxh18/twrp_device_tree_peridot)
+(`16` branch), which pairs with the patched OrangeFox recovery sources
+(`17` branch of `android_bootable_recovery_fox`).
+
+When the Install-page checkbox **"High-speed flash (BETA)"** is enabled, a full
+OTA payload is decoded in parallel by `otaripper` and written **directly** to
+the inactive slot's block devices, instead of being handed to `update_engine`.
+The Super group for the target slot is rebuilt in a single atomic pass first,
+so the `dm-N` nodes already exist at their final size.
+
+* The checkbox is **off by default**.
+* Firmware partitions (`xbl`, `abl`, `tz`, `modem`, `devcfg`, `bluetooth`,
+  `dsp`, ...) are in a hard-coded exclusion set and are **never** written by
+  this path. Unknown partitions abort *before* any write.
+* Full (non-delta) payloads only.
+* Failures leave the booted slot and the active slot untouched, but the target
+  slot can be left incomplete — re-flash it with the normal method.
+
+### alioth-specific notes
+
+Unlike peridot, alioth is **recovery-as-boot** (`BOARD_USES_RECOVERY_AS_BOOT`),
+so the ROM's `boot.img` written by this path *is* the recovery partition.
+OrangeFox is preserved by the existing `tw_auto_reflashtwrp` →
+`Flash_Current_Twrp()` repack path, which runs after the slot flip. For the
+`FOX_VENDOR_BOOT_RECOVERY=1` (vBaR) variant, `pre_rom_flash.sh` /
+`post_rom_flash_completion.sh` back up and restore `vendor_boot` instead.
+
+**Always verify OrangeFox survives on both slots after an HSF flash.**
+
+`otaripper` is a prebuilt, statically-linked aarch64 binary
+(`recovery/root/system/bin/otaripper`, 2.0 MB, no runtime dependencies).
+
 ## Credits
 - [Original alioth tree by Nebrassy](https://github.com/TeamWin/android_device_xiaomi_alioth)
 - [Kernel](https://github.com/AOSPA/android_kernel_xiaomi_sm8250.git)
+- [High-Speed Flash by Khargosxh18](https://github.com/khargosxh18/twrp_device_tree_peridot)
 
 ### Copyright
  ```
