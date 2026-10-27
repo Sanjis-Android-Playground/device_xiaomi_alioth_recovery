@@ -31,11 +31,11 @@
 /persist_image         emmc    /dev/block/bootdevice/by-name/persist                              flags=display="Persist";flashimg=1;backup=1
 
 # Firmware partitions
-/bluetooth             vfat    /dev/block/bootdevice/by-name/bluetooth                            flags=display="bluetooth";slotselect;canbewiped=0;wipeingui=0;fsflags="ro,shortname=lower,uid=1002,gid=3002,dmask=227,fmask=337,context=u:object_r:bt_firmware_file:s0 wait"
+/bluetooth             vfat    /dev/block/bootdevice/by-name/bluetooth                            flags=display="bluetooth";slotselect;canbewiped=0;wipeingui=0;fsflags="ro,shortname=lower,uid=1002,gid=3002,dmask=227,fmask=337,context=u:object_r:bt_firmware_file:s0"
 /bluetooth_image       emmc    /dev/block/bootdevice/by-name/bluetooth                            flags=backup=1;display="bluetooth";slotselect;backup=1;flashimg=1
-/dsp                   vfat    /dev/block/bootdevice/by-name/dsp                                  flags=display="dsp";slotselect;canbewiped=0;wipeingui=0
+/dsp                   ext4    /dev/block/bootdevice/by-name/dsp                                  flags=display="dsp";slotselect;canbewiped=0;wipeingui=0
 /dsp_image             emmc    /dev/block/bootdevice/by-name/dsp                                  flags=backup=1;display="dsp";slotselect;flashimg=1
-/modem                 vfat    /dev/block/bootdevice/by-name/modem                                flags=display="Modem";slotselect;canbewiped=0;wipeingui=0;fsflags="ro,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337,context=u:object_r:firmware_file:s0 wait"
+/modem                 vfat    /dev/block/bootdevice/by-name/modem                                flags=display="Modem";slotselect;canbewiped=0;wipeingui=0;fsflags="ro,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337,context=u:object_r:firmware_file:s0"
 /modem_img             emmc    /dev/block/bootdevice/by-name/modem                                flags=backup=1;display="Modem";slotselect;flashimg=1
 /efs1                  emmc    /dev/block/bootdevice/by-name/modemst1                             flags=backup=1;display=EFS
 /efs2                  emmc    /dev/block/bootdevice/by-name/modemst2                             flags=backup=1;subpartitionof=/efs1
