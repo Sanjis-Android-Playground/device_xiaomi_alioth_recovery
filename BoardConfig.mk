@@ -6,7 +6,7 @@
 #
 
 DEVICE_PATH := device/xiaomi/alioth
-
+OF_MAINTAINER := SANJI
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-2a
