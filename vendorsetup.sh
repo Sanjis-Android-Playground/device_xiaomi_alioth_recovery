@@ -20,7 +20,8 @@
 
 #set -o xtrace
 FDEVICE="alioth"
-THIS_DEVICE=${BASH_ARGV[2]}
+THIS_DEVICE="${THIS_DEVICE:-${BASH_ARGV[2]:-$FDEVICE}}"
+FOX_BUILD_DEVICE="${FOX_BUILD_DEVICE:-$THIS_DEVICE}"
 
 fox_get_target_device() {
   if echo "$BASH_SOURCE" | grep -q "/$FDEVICE/"; then
