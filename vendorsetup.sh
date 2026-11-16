@@ -76,7 +76,7 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	# use the latest magiskboot binary
 	export FOX_USE_UPDATED_MAGISKBOOT=1
 
-	export FOX_SETTINGS_ROOT_DIRECTORY=/data/recovery
+	export FOX_SETTINGS_ROOT_DIRECTORY=/sdcard
 	export FOX_MISCELLANEOUS_ROOT_DIRECTORY=/sdcard
 
 	# vendor_boot-as-recovery
