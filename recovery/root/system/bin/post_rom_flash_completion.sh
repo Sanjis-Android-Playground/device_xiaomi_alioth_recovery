@@ -51,6 +51,7 @@ local src="/tmp/fox_vboot_backup.img";
 # queue the bundled DFE for the next recovery boot, then stay in recovery
 auto_dfe() {
 	[ "$(getprop ro.orangefox.auto_dfe)" = "1" ] || return 0;
+	[ "$(getprop fox_rom_flash)" = "1" ] || return 0;
 	[ -f /FFiles/DFE.zip ] || return 0;
 
 	LOGMSG "I: Queuing DFE for the next recovery boot...";
