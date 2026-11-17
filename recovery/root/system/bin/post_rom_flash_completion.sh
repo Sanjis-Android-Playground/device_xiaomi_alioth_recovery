@@ -48,8 +48,28 @@ local src="/tmp/fox_vboot_backup.img";
 	fi
 }
 
+# queue the bundled DFE for the next recovery boot, then stay in recovery
+auto_dfe() {
+	[ "$(getprop ro.orangefox.auto_dfe)" = "1" ] || return 0;
+	[ -f /FFiles/DFE.zip ] || return 0;
+
+	LOGMSG "I: Queuing DFE for the next recovery boot...";
+	rm -rf /sdcard/neo_file_*;
+	mkdir -p /cache/recovery;
+
+	{
+		echo "install /FFiles/DFE.zip"
+		echo "noForceReboot"
+		echo "print DFE applied. If switching ROMs or coming from encryption, Format Data now."
+	} > /cache/recovery/openrecoveryscript;
+
+	sync;
+	reboot recovery;
+}
+
 #
 LOGMSG "I: Running post-ROM-flash-completion script...";
 restore_vboot;
+auto_dfe;
 exit 0;
 #
