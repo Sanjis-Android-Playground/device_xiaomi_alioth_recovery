@@ -85,6 +85,16 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 		export FOX_INSTALLER_VENDOR_BOOT_RAMDISK_INSTALL=1
 	fi
 
+	# auto-DFE build (set OF_AUTO_DFE=0 to disable); keep it visible in the build name
+	export OF_AUTO_DFE="${OF_AUTO_DFE:-1}"
+	if [ "$OF_AUTO_DFE" = "1" ]; then
+		if [ -n "$FOX_VARIANT" ] && [ "$FOX_VARIANT" != "default" ]; then
+			export FOX_VARIANT="${FOX_VARIANT}-auto-dfe"
+		else
+			export FOX_VARIANT="auto-dfe"
+		fi
+	fi
+
 	# patchelf
 	export FOX_USE_PATCHELF_BINARY=1
 
