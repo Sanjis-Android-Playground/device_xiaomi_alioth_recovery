@@ -69,6 +69,24 @@ OF_ENABLE_FRP_ADDON := 1
 # require the user to reboot the recovery after flashing a ROM
 OF_BLOCK_OPERATIONS_AFTER_ROM_FLASH := 1
 
+# OF_AUTO_DFE controls the build name/variant. Normalize it here as well so
+# changing the exported value does not require re-sourcing envsetup.sh.
+ifneq ($(OF_AUTO_DFE),)
+    FOX_VARIANT := $(patsubst %-auto-dfe,%,$(FOX_VARIANT))
+    FOX_VARIANT := $(patsubst auto-dfe,,$(FOX_VARIANT))
+    ifeq ($(OF_AUTO_DFE),1)
+        ifeq ($(FOX_VARIANT),)
+            FOX_VARIANT := auto-dfe
+        else ifeq ($(FOX_VARIANT),default)
+            FOX_VARIANT := auto-dfe
+        else
+            FOX_VARIANT := $(FOX_VARIANT)-auto-dfe
+        endif
+    else ifeq ($(FOX_VARIANT),)
+        FOX_VARIANT := default
+    endif
+endif
+
 # don't keep log history - only use for Stable releases
 ifeq ($(FOX_BUILD_TYPE),Stable)
    OF_DONT_KEEP_LOG_HISTORY := 1
